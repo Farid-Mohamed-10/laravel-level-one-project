@@ -1,6 +1,6 @@
 @extends('theme.master')
 
-@section('title', 'Index')
+@section('title', 'Home')
 
 @section('home-active', 'active')
 
