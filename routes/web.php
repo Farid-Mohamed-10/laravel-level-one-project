@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubscriberController;
@@ -20,9 +22,9 @@ use Illuminate\Support\Facades\Route;
 // THEME ROUTES
 Route::controller(ThemeController::class)->name('theme.')->group(function () {
     Route::get('/', 'index')->name('index');
-    Route::get('/category', 'category')->name('category');
+    Route::get('/category/{id}', 'category')->name('category');
     Route::get('/contact', 'contact')->name('contact');
-    Route::get('/single-blog', 'singleBlog')->name('singleBlog');
+    // Route::get('/single-blog', 'singleBlog')->name('singleBlog');
 });
 
 // SUBSCRIBER STORE ROUTE
@@ -32,6 +34,13 @@ Route::post('/subscriber/store', [SubscriberController::class, 'store'])->name('
 // CONTACT STORE ROUTE
 Route::post('/contact/store', [ContactController::class, 'store'])->name('contact.store');
 
+
+// BLOG ROUTES
+Route::resource('blogs', BlogController::class);
+Route::get('/my-blogs', [BlogController::class, 'myBlogs'])->name('blogs.my-blogs');
+
+// COMMENT ROUTE
+Route::post('/comments/store', [CommentController::class, 'store'])->name('comments.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -43,4 +52,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
